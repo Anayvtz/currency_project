@@ -13,19 +13,24 @@
             align-items: center;
             height: 100vh;
             margin: 0;
-            background-color: #f0f0f0;
+            background-color: black;
         }
 
-        .converter {
-            background-color: white;
+        .container {
+            display: flex;
+        }
+
+        .box {
+            background-color: black;
             padding: 2rem;
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border: 1px solid gray;
         }
 
         h1 {
             text-align: center;
-            color: #333;
+            color: crimson;
         }
 
         .input-group {
@@ -68,28 +73,58 @@
             font-weight: bold;
             color: #333;
         }
+
+        #coins {
+            margin-bottom: 20px;
+        }
+
+        #cryptoCoins {
+            margin-bottom: 20px;
+        }
+
+        .ratesWrapper {
+            display: flex;
+            flex-direction: column;
+        }
     </style>
 </head>
 
 <body>
-    <div class="converter">
-        <h1>Currency Converter</h1>
-        <div class="input-group">
-            <label for="amount">Amount:</label>
-            <input type="number" id="amount" placeholder="Enter amount" />
+    <div class="container">
+        <div class="converter box">
+            <h1>Currency Converter</h1>
+            <div class="input-group">
+                <label for="amount">Amount:</label>
+                <input type="number" id="amount" placeholder="Enter amount" />
+            </div>
+            <div class="input-group">
+                <label for="from-currency">From Currency:</label>
+                <select id="from-currency"></select>
+            </div>
+            <div class="input-group">
+                <label for="to-currency">To Currency:</label>
+                <select id="to-currency"></select>
+            </div>
+            <button id="convert">Convert</button>
+            <div id="result">Converted amount will appear here</div>
+
         </div>
-        <div class="input-group">
-            <label for="from-currency">From Currency:</label>
-            <select id="from-currency"></select>
+        <div class="ratesWrapper">
+            <div class="exchange box">
+                <h1>exchange rates</h1>
+                <select name="" id="coins"></select>
+                <button id="rates">exchange rates</button>
+            </div>
+            <div class="crypto box">
+                <h1>crypto rates</h1>
+                <select id="cryptoCoins"></select>
+                <button id="cryptoBtn">crypto</button>
+            </div>
         </div>
-        <div class="input-group">
-            <label for="to-currency">To Currency:</label>
-            <select id="to-currency"></select>
-        </div>
-        <button id="convert">Convert</button>
-        <div id="result">Converted amount will appear here</div>
     </div>
-    <script src="currency.js"></script>
+    <script type="module" src="utils.js"></script>
+    <script type="module" src="currency.js"></script>
+    <script type="module" src="crypto.js"></script>
 </body>
 
 </html>

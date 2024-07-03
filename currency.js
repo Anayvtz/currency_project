@@ -1,3 +1,6 @@
+
+import { createWindow } from './utils.js';
+
 populateSelectors();
 document.getElementById("convert").addEventListener("click", () => {
     let amount = getAmount();
@@ -9,7 +12,7 @@ document.getElementById("convert").addEventListener("click", () => {
         console.error(err)
     )
 });
-
+document.getElementById("rates").addEventListener("click", exchangeRates);
 
 async function populateSelectors() {
     let response = await fetch("https://v6.exchangerate-api.com/v6/123bfaff5033b4351e1ca917/codes");
@@ -18,10 +21,12 @@ async function populateSelectors() {
     let codes = data.supported_codes.map((item) => item[0]);
     let fromSelector = document.getElementById("from-currency");
     let toSelector = document.getElementById("to-currency");
+    let coins = document.getElementById("coins");
     codes.forEach((code) => {
         let newOption = `<option value="${code}">${code}</option>`;
         fromSelector.innerHTML += newOption;
         toSelector.innerHTML += newOption;
+        coins.innerHTML += newOption;
     });
 }
 function getAmount() {
@@ -50,4 +55,29 @@ function print(amountCnvrtd) {
     let result = document.getElementById("result");
     console.log(amountCnvrtd);
     result.innerHTML = amountCnvrtd;
+}
+
+async function exchangeRates() {
+    let coin = document.getElementById("coins").value;
+    let exchangeRatesArr = await getExchangeRates(coin);
+    let tableHTML = prepareTblHTML(exchangeRatesArr, coin);
+    createWindow(tableHTML);
+}
+function prepareTblHTML(exchangeRatesArr, coin) {
+    let tableHTML = `<h1>exchange rates of ${coin}</h1><table border="1"><thead><><th>Coin</th><th>rate</th></thead><tbody>`;
+    exchangeRatesArr.forEach(item => {
+        tableHTML += `<tr><td>${item[0]}</td><td>${item[1]}</td></tr>`;
+
+    });
+    tableHTML += '</tbody></table>';
+    return tableHTML;
+}
+
+async function getExchangeRates(coin) {
+    let response = await fetch("https://v6.exchangerate-api.com/v6/123bfaff5033b4351e1ca917/latest/" + coin);
+    let data = await response.json();
+    let coinsArr = Object.keys(data.conversion_rates);
+    let ratesArr = Object.values(data.conversion_rates);
+    let exchangeRatesArr = coinsArr.map((key, index) => [key, ratesArr[index]]);
+    return exchangeRatesArr;
 }
