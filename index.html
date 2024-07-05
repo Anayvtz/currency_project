@@ -26,6 +26,7 @@
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             border: 1px solid gray;
+            margin: 20px;
         }
 
         h1 {
@@ -86,6 +87,21 @@
             display: flex;
             flex-direction: column;
         }
+
+        .price {
+            height: 540px;
+            overflow: auto;
+        }
+
+        .price table {
+            color: grey;
+            border: none;
+        }
+
+        .price table #priceTbl img {
+            width: 80px;
+            height: 80px;
+        }
     </style>
 </head>
 
@@ -121,8 +137,23 @@
                 <button id="cryptoBtn">crypto</button>
             </div>
         </div>
+        <div class="box price">
+            <h1>crypto prices</h1>
+            <table>
+                <thead>
+                    <th>icon</th>
+                    <th>symbol</th>
+                    <th>name</th>
+                    <th>price usd</th>
+                    <th> price btc</th>
+                </thead>
+                <tbody id="priceTbl">
+
+                </tbody>
+            </table>
+        </div>
     </div>
-    <script type="module" src="utils.js"></script>
+
     <script type="module" src="currency.js"></script>
     <script type="module" src="crypto.js"></script>
 </body>
