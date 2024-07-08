@@ -1,6 +1,6 @@
 
 export function createWindow(tableHTML) {
-    let newWindow = window.open('', '_blank');
+    let newWindow = window.open('', '_blank', 'location=yes,toolbar=yes,directories=yes,status=yes,menubar=yes,scrollbar=yes');
     newWindow.document.open();
     newWindow.document.write(`
         <html>

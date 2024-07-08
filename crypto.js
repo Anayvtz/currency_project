@@ -75,6 +75,14 @@ icons["JASMY"] = "./images/jasmy.svg";
 icons["CHEEL"] = "./images/Cheelee.svg";
 icons["FET"] = "./images/Fetchai.jpg";
 icons["ALGO"] = "./images/icons8-algorand-64.png";
+icons["MSOL"] = "./images/mSOL.png";
+icons["QNT"] = "./images/icons8-quant-64.png";
+icons["PENDLE"] = "./images/pendle-pendle-logo.png";
+icons["ARB"] = "./images/Arbitrum.png";
+icons["CORE"] = "./images/icons8-core-48.png";
+icons["AKT"] = "./images/Cryptocurrency-Akash-network-Logo-Line-Graphics-15065967-1.jpg";
+icons["CRO"] = "./images/crypto-com-cryptocurrency-icon-512x512-bj6qik3x.png";
+icons["AGIX"] = "./images/agi-svgrepo-com.svg";
 
 async function getCryptoSymbols() {
     let response = await fetch("https://api.coinlore.net/api/tickers/");
@@ -82,7 +90,7 @@ async function getCryptoSymbols() {
     console.log(data);
     let symbols = data.data.map((item) => item.symbol);
     console.log(symbols);
-    populateCryptoTables(symbols);
+    populateCryptoTables(symbols, data);
     let coinsNum = data.info.coins_num;
     console.log(coinsNum);
     let start = 100;
@@ -95,7 +103,7 @@ async function getCryptoSymbols() {
             let resp = await fetch(`https://api.coinlore.net/api/tickers/?start=${start}&limit=${nextAmount}`);
             let respData = await resp.json();
             let currSymbolsArr = respData.data.map(item => item.symbol);
-            populateCryptoTables(currSymbolsArr);
+            populateCryptoTables(currSymbolsArr, respData);
 
             symbols = [...symbols, ...currSymbolsArr];
 
@@ -107,12 +115,14 @@ async function getCryptoSymbols() {
     console.log(cryptoIdTbl);
     return symbols;
 }
-function populateCryptoTables(arr) {
+
+function populateCryptoTables(arr, data) {
     arr.forEach((item, index) => cryptoIdTbl[item] = data.data[index].id);
     arr.forEach((item, index) => cryptoNameTbl[item] = data.data[index].name);
     arr.forEach((item, index) => cryptoPriceUsdTbl[item] = data.data[index].price_usd);
     arr.forEach((item, index) => cryptoPriceBtcTbl[item] = data.data[index].price_btc);
 }
+
 async function populateCryptoSymbols() {
     let symbolsArr = await getCryptoSymbols();
     let cryptoCoins = document.getElementById("cryptoCoins");
